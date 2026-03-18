@@ -1,19 +1,27 @@
 import React, { useEffect, useRef } from 'react'
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
-const Message = ({message}) => {
+const Message = ({ message }) => {
     const scroll = useRef();
-    const {authUser,selectedUser} = useSelector(store=>store.user);
+    const { authUser, selectedUser } = useSelector(store => store.user);
 
-    useEffect(()=>{
-        scroll.current?.scrollIntoView({behavior:"smooth"});
-    },[message]);
-    
+    useEffect(() => {
+        scroll.current?.scrollIntoView({ behavior: "smooth" });
+    }, [message]);
+
     return (
         <div ref={scroll} className={`chat ${message?.senderId === authUser?._id ? 'chat-end' : 'chat-start'}`}>
             <div className="chat-image avatar">
                 <div className="w-10 rounded-full">
-                    <img alt="Tailwind CSS chat bubble component" src={message?.senderId === authUser?._id ? authUser?.profilePhoto  : selectedUser?.profilePhoto } />
+                    {/* <img alt="Tailwind CSS chat bubble component" src={message?.senderId === authUser?._id ? authUser?.profilePhoto  : selectedUser?.profilePhoto } /> */}
+                    <img
+                        alt="user avatar"
+                        src={
+                            message?.senderId === authUser?._id
+                                ? (authUser?.profilePhoto || "https://cdn-icons-png.flaticon.com/512/149/149071.png")
+                                : (selectedUser?.profilePhoto || "https://cdn-icons-png.flaticon.com/512/149/149071.png")
+                        }
+                    />
                 </div>
             </div>
             <div className="chat-header">
